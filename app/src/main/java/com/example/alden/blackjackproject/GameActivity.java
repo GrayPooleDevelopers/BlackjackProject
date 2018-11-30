@@ -19,7 +19,7 @@ public class GameActivity extends AppCompatActivity {
     private int bank;
     private int bet;
     TextView bankText, betText;
-    Button bet100,bet500,bet50;
+    Button bet100,bet500,bet50,menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -37,6 +37,14 @@ public class GameActivity extends AppCompatActivity {
         bet100 = findViewById(R.id.button_hundred);
         bet50 = findViewById(R.id.button_fifty);
         bet500 = findViewById(R.id.button_five);
+        menu = findViewById(R.id.menu_button);
+
+        menu.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openMenu();
+            }
+        });//Close open game button
 
         bet100.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -118,4 +126,9 @@ public class GameActivity extends AppCompatActivity {
         bankText.setText("Bank Total: $" + bank);
         betText.setText("Bet Total: $" + bet);
     }
+
+    public void openMenu(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    } //Close openCraps
 }
