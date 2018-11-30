@@ -9,6 +9,51 @@
     android:background="@drawable/game_back"
     tools:context=".MainActivity">
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="top|left">
+
+        <Button
+            android:id="@+id/menu_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="325dp"
+            android:background="@drawable/menu_button"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"></Button>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_margin="5dp">
+        <TextView
+            android:id="@+id/bank_total"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="Bank Total:"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:id="@+id/bet_total"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bet Total:"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            />
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -26,8 +71,7 @@
                 android:gravity="center"
                 android:layout_width="82dp"
                 android:layout_height="125dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:src="@drawable/red_back" />
             <ImageView
@@ -35,8 +79,7 @@
                 android:gravity="center"
                 android:layout_width="82dp"
                 android:layout_height="125dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:src="@drawable/red_back" />
             <ImageView
@@ -44,8 +87,7 @@
                 android:gravity="center"
                 android:layout_width="82dp"
                 android:layout_height="125dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:src="@drawable/red_back" />
 
@@ -59,9 +101,7 @@
                 android:id="@+id/button_stand"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
+                android:layout_margin="5dp"
                 android:background="@drawable/green_chip"
                 android:shadowColor="#A8A8A8"
                 android:shadowDx="0"
@@ -75,8 +115,7 @@
                 android:gravity="center"
                 android:layout_width="82dp"
                 android:layout_height="125dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:src="@drawable/red_back" />
             <ImageView
@@ -84,8 +123,7 @@
                 android:gravity="center"
                 android:layout_width="82dp"
                 android:layout_height="125dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_margin="5dp"
 
                 android:layout_weight="1"
                 android:src="@drawable/red_back" />
@@ -93,9 +131,7 @@
                 android:id="@+id/button_hit"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
+                android:layout_margin="5dp"
                 android:background="@drawable/red_chip"
                 android:shadowColor="#A8A8A8"
                 android:shadowDx="0"
