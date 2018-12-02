@@ -7,7 +7,12 @@
     <string name="euros">EUROS</string>
     <string name="dollars">USD</string>
     <string name="currency_info">Please choose your desired currency!</string>
-    <string name="rules_info">PLACEHOLDER FOR RULES</string>
+    <string name="rules_label">Rules for Blackjack:</string>
+    <string name="rules_info">The game begins with the dealer dealing two cards to the player.
+                              One card will be face down and one card will be face up. The player can choose to hit or stand based on the results.
+                              If the player reaches a total score of 21, he gets Blackjack and wins automatically. If the player goes above 21, he busts
+                              and loses. All face cards are worth 10 while each numbered card is worth its value on the card. If the player reaches 4 cards
+                              without busting, he wins the pot!</string>
     <string name="names">Created by: Thomas Gray and Alden Poole</string>
     <string name="course">IS 3920</string>
     <string name="last_updated">Last updated: 11/28/18 </string>

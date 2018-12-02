@@ -21,8 +21,8 @@
     <ImageView
         android:id="@+id/logo_image_view"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="-95dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="-70dp"
         android:contentDescription="GrayPoole"
         app:srcCompat="@drawable/greypoole" />
 
@@ -31,10 +31,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/white"
-        android:textStyle="italic"
         android:text="@string/rules_info"
-        android:textSize="12sp" />
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/names_text_view"
