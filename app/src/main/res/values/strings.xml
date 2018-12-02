@@ -3,4 +3,14 @@
     <string name="start_game">Start Game</string>
     <string name="settings">Settings</string>
     <string name="about_us">About Us</string>
+    <string name="home">HOME</string>
+    <string name="euros">EUROS</string>
+    <string name="dollars">USD</string>
+    <string name="currency_info">Please choose your desired currency!</string>
+    <string name="rules_info">PLACEHOLDER FOR RULES</string>
+    <string name="names">Created by: Thomas Gray and Alden Poole</string>
+    <string name="course">IS 3920</string>
+    <string name="last_updated">Last updated: 11/28/18 </string>
+    <string name="majors">Thomas - Information Security (Minor in Information Systems)
+                         \nAlden - Applied Computer Science (Minor in Information Systems)</string>
 </resources>

@@ -1,0 +1,96 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/about_screen"
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/logo_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="-95dp"
+        android:contentDescription="GrayPoole"
+        app:srcCompat="@drawable/greypoole" />
+
+    <TextView
+        android:id="@+id/rules_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textStyle="italic"
+        android:text="@string/rules_info"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/names_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/names"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/course_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/course"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/updated_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        android:text="@string/last_updated" />
+
+    <TextView
+        android:id="@+id/majors_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/majors"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="italic" />
+
+    <Button
+        android:id="@+id/return_from_about_button"
+        android:layout_width="270dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="@string/home"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+
+
+</LinearLayout>
