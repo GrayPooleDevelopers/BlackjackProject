@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@drawable/about_screen"
+    android:background="@drawable/about"
     tools:context=".MainActivity">
 
 
