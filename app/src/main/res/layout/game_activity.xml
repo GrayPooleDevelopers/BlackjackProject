@@ -73,7 +73,7 @@
                 android:layout_height="125dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:src="@drawable/red_back" />
+                android:src="@drawable/back" />
             <ImageView
                 android:id="@+id/cardView2"
                 android:gravity="center"
@@ -81,7 +81,7 @@
                 android:layout_height="125dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:src="@drawable/red_back" />
+                android:src="@drawable/back" />
             <ImageView
                 android:id="@+id/cardView3"
                 android:gravity="center"
@@ -89,7 +89,7 @@
                 android:layout_height="125dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:src="@drawable/red_back" />
+                android:src="@drawable/back" />
 
             <ImageView
                 android:id="@+id/cardView4"
@@ -98,7 +98,7 @@
                 android:layout_height="125dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:src="@drawable/red_back" />
+                android:src="@drawable/back" />
 
         </LinearLayout>
 
