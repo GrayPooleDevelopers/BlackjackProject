@@ -19,7 +19,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginRight="325dp"
-            android:background="@drawable/menu_button"
+            android:background="@drawable/die3"
             android:shadowColor="#A8A8A8"
             android:shadowDx="0"
             android:shadowDy="0"
