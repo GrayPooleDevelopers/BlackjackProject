@@ -13,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 import android.content.Context;
+import java.util.ArrayList;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -27,6 +28,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.game_activity);
         bank = 1000;
         bet = 0;
+
 
         bankText=(TextView)findViewById(R.id.bank_total);
         betText=(TextView)findViewById(R.id.bet_total);
