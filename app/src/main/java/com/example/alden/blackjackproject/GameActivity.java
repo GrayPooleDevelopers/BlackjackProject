@@ -1,8 +1,16 @@
+/*Created by Thomas Gray tgray39 and Alden Poole dpoole5
+    Final Project
+    IS 3920
+    Blackjack Game
+    December 3 2018
+ */
+
 package com.example.alden.blackjackproject;
 
 import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -107,7 +115,7 @@ public class GameActivity extends AppCompatActivity {
     //Initialize end game dialog screen
     Dialog dialog;
 
-
+    //
     public void showPopup(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         MenuInflater inflater = popup.getMenuInflater();
@@ -143,6 +151,10 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
+
+        final MediaPlayer betSound = MediaPlayer.create(this,R.raw.bet_sound);
+        final MediaPlayer hit_stand_sound = MediaPlayer.create(this,R.raw.shuffle);
+
 
         if(savedInstanceState != null){
             bank = savedInstanceState.getInt("bank");
@@ -334,6 +346,7 @@ public class GameActivity extends AppCompatActivity {
         buttonhit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                hit_stand_sound.start();
                 if(hitCount < 3){
                     hitOne();
                 }
@@ -347,28 +360,37 @@ public class GameActivity extends AppCompatActivity {
         buttonstand.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                int playerStand = 21-playerTot;
-                int dealerStand = 21-dealTot;
+
+                hit_stand_sound.start();
                 //Test for victory
-                if((playerStand > dealerStand || playerStand < 0) && dealerStand >= 0){
-                    TextView text = (TextView) dialog.findViewById(R.id.end_text);
-                    text.setText("You lose!");
-                    bank-=bet;
-                    if(bank <= 0){
-                        continueButton.setAlpha(.5f);
-                        continueButton.setClickable(false);
-                        text.setText("You lost all your money!");
+                if(playerTot > 21) {
+                    youLose();
+                }
+                if(dealTot == 21 && playerTot!=21) {
+                    youLose();
+                }
+                if(dealTot < 21 && playerTot < 21){
+                    if(dealTot>playerTot){youLose();}
+                }
+                if(playerTot < dealTot && dealTot <= 21){
+                    youLose();
+                }
+                if(playerTot < 21 && dealTot > 21){
+                    youWin();
+                }
+                if(playerTot == 21 && dealTot != 21){
+                    youWin();
+                }
+                if(dealTot < 21 && playerTot < 21){
+                    if(playerTot > dealTot){
+                        youWin();
                     }
-                    dialog.show();
-                    bankText.setText("Bank Total: " + currency + (bank*multiplier));
-                    betText.setText("Bet Total: " + currency + (bet*multiplier));
-                }else{
+                }
+                if((playerTot == 21 && dealTot == 21)||(dealTot > 21 && playerTot > 21) || (playerTot==dealTot)){
                     TextView text = (TextView) dialog.findViewById(R.id.end_text);
-                    text.setText("You win!");
-                    bank+=(bet*2);
+                    text.setText("Draw");
                     dialog.show();
-                    bankText.setText("Bank Total: " + currency + (bank*multiplier));
-                    betText.setText("Bet Total: " + currency + (bet*multiplier));
+                    setTexts();
                 }
             }
         });//Close stand button
@@ -377,13 +399,16 @@ public class GameActivity extends AppCompatActivity {
         bet50.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                betSound.start();
                 bet50();
             }
         });
 
         bet100.setOnClickListener(new View.OnClickListener(){
+
             @Override
             public void onClick(View v) {
+                betSound.start();
                 bet100();
             }
         });
@@ -391,10 +416,32 @@ public class GameActivity extends AppCompatActivity {
         bet500.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                betSound.start();
                 bet500();
             }
         });//Close betting buttons
 
+    }
+
+    public void youLose(){
+        TextView text = (TextView) dialog.findViewById(R.id.end_text);
+        text.setText("You lose!");
+        bank-=bet;
+        if(bank <= 0){
+            continueButton.setAlpha(.5f);
+            continueButton.setClickable(false);
+            text.setText("You lost all your money!");
+        }
+        dialog.show();
+        setTexts();
+    }
+
+    public void youWin(){
+        TextView text = (TextView) dialog.findViewById(R.id.end_text);
+        text.setText("You win!");
+        bank+=(bet*2);
+        dialog.show();
+        setTexts();
     }
 
     //Methods
@@ -514,6 +561,7 @@ public class GameActivity extends AppCompatActivity {
 
     //Betting methods
     public void bet50(){
+
         if(bank >= 50){
             bank-=50;
             bet+=50;
@@ -589,22 +637,23 @@ public class GameActivity extends AppCompatActivity {
             deck.remove(1);
         }
 
-        if(playerTot > 21 || dealTot == 21){
+        if(playerTot > 21) {
+            youLose();
+        }
+        if(dealTot == 21 && playerTot!=21) {
+            youLose();
+        }
+        if(playerTot < 21 && dealTot > 21){
+            youWin();
+        }
+        if(playerTot == 21 && dealTot != 21){
+            youWin();
+        }
+        if((playerTot == 21 && dealTot == 21)||(dealTot > 21 && playerTot > 21)){
             TextView text = (TextView) dialog.findViewById(R.id.end_text);
-            text.setText("You lose!");
-            bank-=bet;
-            if(bank <= 0){
-                continueButton.setAlpha(.5f);
-                continueButton.setClickable(false);
-                text.setText("You lost all your money!");
-            }
+            text.setText("Draw");
             dialog.show();
-
-        }else if(playerTot == 21 || dealTot > 21){
-            TextView text = (TextView) dialog.findViewById(R.id.end_text);
-            text.setText("You win!");
-            bank+=(bet*2);
-            dialog.show();
+            setTexts();
         }
             deck.remove(0);
             hitCount++;
@@ -622,21 +671,32 @@ public class GameActivity extends AppCompatActivity {
             dealTot+=deck.get(0).getValue();
             deck.remove(0);
         }
-        if(playerTot > 21 || dealTot == 21){
+        if(playerTot > 21) {
+            youLose();
+        }
+        if(dealTot == 21 && playerTot!=21) {
+            youLose();
+        }
+        if((dealTot < 21 && playerTot < 21) && dealTot>playerTot){
+            youLose();
+        }
+        if(playerTot < dealTot && dealTot <= 21){
+            youLose();
+        }
+        if(playerTot <= 21 && dealTot > 21){
+            youWin();
+        }
+        if(playerTot == 21 && dealTot != 21){
+            youWin();
+        }
+        if((dealTot < 21 && playerTot < 21)&&playerTot>dealTot){
+            youWin();
+        }
+        if((playerTot == 21 && dealTot == 21)||(dealTot > 21 && playerTot > 21) || (playerTot==dealTot)){
             TextView text = (TextView) dialog.findViewById(R.id.end_text);
-            text.setText("You lose!");
-            bank-=bet;
-            if(bank <= 0){
-                continueButton.setAlpha(.5f);
-                continueButton.setClickable(false);
-                text.setText("You lost all your money!");
-            }
+            text.setText("Draw");
             dialog.show();
-        }else if(playerTot == 21 || playerTot < 21){
-            TextView text = (TextView) dialog.findViewById(R.id.end_text);
-            text.setText("You win!");
-            bank+=(bet*2);
-            dialog.show();
+            setTexts();
         }
         deck.remove(0);
         hitCount++;
