@@ -12,20 +12,72 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="100dp"
         android:orientation="vertical"
         android:gravity="center">
         <TextView
             android:id="@+id/end_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:gravity="center"
             />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/endDealCard1"
+                android:gravity="center"
+                android:layout_width="82dp"
+                android:layout_height="125dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:src="@drawable/blank" />
+            <ImageView
+                android:id="@+id/endDealCard2"
+                android:gravity="center"
+                android:layout_width="82dp"
+                android:layout_height="125dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:src="@drawable/blank" />
+            <ImageView
+                android:id="@+id/endDealCard3"
+                android:gravity="center"
+                android:layout_width="82dp"
+                android:layout_height="125dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:src="@drawable/blank" />
+
+            <ImageView
+                android:id="@+id/endDealCard4"
+                android:gravity="center"
+                android:layout_width="82dp"
+                android:layout_height="125dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:src="@drawable/blank" />
+
+
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/vs_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="vs"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:gravity="center">
 
@@ -67,11 +119,17 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:gravity="center">
         <Button
             android:id="@+id/mainMenu_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:shadowColor="#A8A8A8"
             android:shadowDx="0"
             android:shadowDy="0"
@@ -83,7 +141,7 @@
             android:id="@+id/continue_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:shadowColor="#A8A8A8"
             android:shadowDx="0"
             android:shadowDy="0"
@@ -91,6 +149,7 @@
             android:text="Continue"
             android:textColor="@color/black"
             android:textSize="16sp" />
+        </LinearLayout>
 
     </LinearLayout>
 

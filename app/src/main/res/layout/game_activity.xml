@@ -30,6 +30,55 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/dealerCard1"
+                android:gravity="center"
+                android:layout_width="82dp"
+                android:layout_height="125dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:src="@drawable/blank" />
+            <ImageView
+                android:id="@+id/dealerCard2"
+                android:gravity="center"
+                android:layout_width="82dp"
+                android:layout_height="125dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:src="@drawable/blank" />
+            <ImageView
+                android:id="@+id/dealerCard3"
+                android:gravity="center"
+                android:layout_width="82dp"
+                android:layout_height="125dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:src="@drawable/blank" />
+
+            <ImageView
+                android:id="@+id/dealerCard4"
+                android:gravity="center"
+                android:layout_width="82dp"
+                android:layout_height="125dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:src="@drawable/blank" />
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_margin="5dp">

@@ -1,8 +1,6 @@
 package com.example.alden.blackjackproject;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -13,14 +11,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.Collections;
-import java.util.Random;
 import android.widget.Toast;
 import android.content.Context;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class GameActivity extends AppCompatActivity {
+
+    //Create bitmaps for all cards**************************************************************************************************************************
     Bitmap back; // back card
+
+    Bitmap blank; //computer blanks
+
     Bitmap twoclubs;
     Bitmap threeclubs;
     Bitmap fourclubs;
@@ -73,55 +74,61 @@ public class GameActivity extends AppCompatActivity {
     Bitmap queendiamonds;
     Bitmap kingdiamonds;
     Bitmap acediamonds;
-    Random rand;
-    int deckSize = 52;
+    //End create bitmaps********************************************************************************************************************************************
+
+    //Initialize tracking integers
     int hitCount = 0;
-    private int bank;
-    private int bet;
+    int playerTot = 0;
+    int dealTot = 0;
+    int bank;
+    int bet;
+
+    //Initialize UI image views, buttons, textviews
+    ImageView[] cardViews, endCardViews,dealerCardViews,endDealerViews;
     TextView bankText, betText;
     Button bet100,bet500,bet50,menu,buttonhit,buttonstand,mainMenu,continueButton;
-    ImageView card1, card2, card3, card4;
+
+    //Initialize deck of cards
     ArrayList<Card> deck;
-    ImageView[] cardViews, endCardViews;
-    int playerTot = 0;
+
+    //Initialize end game dialog screen
     Dialog dialog;
-    ImageView endCard1, endCard2, endCard3, endCard4;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
+
+        //Set default amounts for bank and betting
         bank = 1000;
         bet = 0;
+
+        //Give end game screen attributes
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.end_screen);
         dialog.setTitle("End Game");
         dialog.setCancelable(true);
+
+        //Fill end game screen buttons XML
         mainMenu = (Button) dialog.findViewById(R.id.mainMenu_button);
         continueButton = (Button) dialog.findViewById(R.id.continue_button);
-        mainMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMenu();
-            }
-        });
-        continueButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-                resetGame();
-            }
-        });
-        cardViews =  new ImageView[4];
-        endCardViews =  new ImageView[4];
-        endCardViews[0] = (ImageView) dialog.findViewById(R.id.endCard1);
-        endCardViews[1] = (ImageView) dialog.findViewById(R.id.endCard2);
-        endCardViews[2] = (ImageView) dialog.findViewById(R.id.endCard3);
-        endCardViews[3] = (ImageView) dialog.findViewById(R.id.endCard4);
+
+        //Fill buttons for betting, hitting, standing, and main menu
+        bet100 = findViewById(R.id.button_hundred);
+        bet50 = findViewById(R.id.button_fifty);
+        bet500 = findViewById(R.id.button_five);
+        menu = findViewById(R.id.menu_button);
+        buttonhit = findViewById(R.id.button_hit);
+        buttonstand = findViewById(R.id.button_stand);
 
 
+
+
+        //Fill bitmaps with images from resource folder***************************************************************************************************************************
         back = BitmapFactory.decodeResource(getResources(), R.drawable.back);
+
+        blank = BitmapFactory.decodeResource(getResources(), R.drawable.blank);
 
         twoclubs = BitmapFactory.decodeResource(getResources(), R.drawable.two_of_clubs);
         threeclubs = BitmapFactory.decodeResource(getResources(), R.drawable.three_of_clubs);
@@ -178,12 +185,33 @@ public class GameActivity extends AppCompatActivity {
         queendiamonds = BitmapFactory.decodeResource(getResources(), R.drawable.queen_of_diamonds);
         kingdiamonds = BitmapFactory.decodeResource(getResources(), R.drawable.king_of_diamonds);
         acediamonds = BitmapFactory.decodeResource(getResources(), R.drawable.ace_of_diamonds);
+        //End bitmaps*********************************************************************************************************************************************
 
+        //Fill card deck with cards and shuffle
         deck = new ArrayList<Card>();
-
         fillDeck();
-
         Collections.shuffle(deck);
+
+        //Fill ImageView arrays with images
+        cardViews =  new ImageView[4];
+        endCardViews =  new ImageView[4];
+        dealerCardViews = new ImageView[4];
+        endDealerViews = new ImageView[4];
+
+        dealerCardViews[0] = (ImageView) findViewById(R.id.dealerCard1);
+        dealerCardViews[1] = (ImageView) findViewById(R.id.dealerCard2);
+        dealerCardViews[2] = (ImageView) findViewById(R.id.dealerCard3);
+        dealerCardViews[3] = (ImageView) findViewById(R.id.dealerCard4);
+
+        endCardViews[0] = (ImageView) dialog.findViewById(R.id.endCard1);
+        endCardViews[1] = (ImageView) dialog.findViewById(R.id.endCard2);
+        endCardViews[2] = (ImageView) dialog.findViewById(R.id.endCard3);
+        endCardViews[3] = (ImageView) dialog.findViewById(R.id.endCard4);
+
+        endDealerViews[0] = (ImageView) dialog.findViewById(R.id.endDealCard1);
+        endDealerViews[1] = (ImageView) dialog.findViewById(R.id.endDealCard2);
+        endDealerViews[2] = (ImageView) dialog.findViewById(R.id.endDealCard3);
+        endDealerViews[3] = (ImageView) dialog.findViewById(R.id.endDealCard4);
 
         cardViews[0] = (ImageView)findViewById(R.id.cardView1);
         cardViews[1] = (ImageView)findViewById(R.id.cardView2);
@@ -191,31 +219,64 @@ public class GameActivity extends AppCompatActivity {
         cardViews[3] = (ImageView)findViewById(R.id.cardView4);
 
 
+
+
+        //Deal first cards, update end game screen card
         cardViews[0].setImageBitmap(deck.get(0).getImage());
         endCardViews[0].setImageBitmap(deck.get(0).getImage());
         playerTot+=deck.get(0).getValue();
-        hitCount++;
+
+        dealerCardViews[0].setImageBitmap(back);
+        endDealerViews[0].setImageBitmap(deck.get(1).getImage());
+        dealTot+=deck.get(1).getValue();
+
         deck.remove(0);
+        deck.remove(0);
+
+        hitCount++;
+
+        //Deal second cards, update end game screen card
         cardViews[1].setImageBitmap(deck.get(0).getImage());
         endCardViews[1].setImageBitmap(deck.get(0).getImage());
         playerTot+=deck.get(0).getValue();
-        hitCount++;
+
+        dealerCardViews[1].setImageBitmap(back);
+        endDealerViews[1].setImageBitmap(deck.get(1).getImage());
+        dealTot+=deck.get(1).getValue();
+
+        deck.remove(0);
         deck.remove(0);
 
+        hitCount++;
+
+        //Fill text views for bank and betting
         bankText=(TextView)findViewById(R.id.bank_total);
         betText=(TextView)findViewById(R.id.bet_total);
 
         bankText.setText("Bank Total: $" + bank);
         betText.setText("Bet Total: $" + bet);
 
-        bet100 = findViewById(R.id.button_hundred);
-        bet50 = findViewById(R.id.button_fifty);
-        bet500 = findViewById(R.id.button_five);
-        menu = findViewById(R.id.menu_button);
-        buttonhit = findViewById(R.id.button_hit);
-        buttonstand = findViewById(R.id.button_stand);
 
 
+
+        //Create button listeners
+
+        //End screen buttons
+        mainMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMenu();
+            }
+        });
+        continueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+                resetGame();
+            }
+        });//Close end screen buttons
+
+        //Hit Button
         buttonhit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -226,56 +287,130 @@ public class GameActivity extends AppCompatActivity {
                     hitTwo();
                 }
             }
-        });//Close open game button
+        });//Close hit button
 
+        //Stand button
+        buttonstand.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                int playerStand = 21-playerTot;
+                int dealerStand = 21-dealTot;
+                //Test for victory
+                if((playerStand > dealerStand || playerStand < 0) && dealerStand >= 0){
+                    TextView text = (TextView) dialog.findViewById(R.id.end_text);
+                    text.setText("You lose!");
+                    bank-=bet;
+                    if(bank <= 0){
+                        continueButton.setAlpha(.5f);
+                        continueButton.setClickable(false);
+                        text.setText("You lost all your money!");
+                    }
+                    dialog.show();
+                    bankText.setText("Bank Total: $" + bank);
+                    betText.setText("Bet Total: $" + bet);
+                }else{
+                    TextView text = (TextView) dialog.findViewById(R.id.end_text);
+                    text.setText("You win!");
+                    bank+=(bet*2);
+                    dialog.show();
+                    bankText.setText("Bank Total: $" + bank);
+                    betText.setText("Bet Total: $" + bet);
+                }
+            }
+        });//Close stand button
+
+
+        //Main Menu button
         menu.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 openMenu();
             }
-        });//Close open game button
+        });//Close main menu button
+
+        //Betting buttons
+        bet50.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                bet50();
+            }
+        });
 
         bet100.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 bet100();
             }
-        });//Close open game button
+        });
 
         bet500.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 bet500();
             }
-        });//Close open game button
-
-        bet50.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                bet50();
-            }
-        });//Close open game button
+        });//Close betting buttons
 
     }
 
+    //Methods
+
+    //Method for a new game if money is still in bank.
     public void resetGame(){
-       deck.removeAll(deck);
-       fillDeck();
-       hitCount = 2;
-       playerTot = 0;
+        //Reset and reshuffle deck
+        deck.removeAll(deck);
+        fillDeck();
+        Collections.shuffle(deck);
+        //Reset all values
+        bet = 0;
+
+        //Player*************************************************
+        playerTot = 0;
+
+        cardViews[0].setImageBitmap(deck.get(0).getImage());
+        cardViews[1].setImageBitmap(deck.get(1).getImage());
         cardViews[2].setImageBitmap(back);
         cardViews[3].setImageBitmap(back);
-        cardViews[0].setImageBitmap(deck.get(0).getImage());
+
         endCardViews[0].setImageBitmap(deck.get(0).getImage());
+        endCardViews[1].setImageBitmap(deck.get(1).getImage());
+        endCardViews[2].setImageBitmap(back);
+        endCardViews[3].setImageBitmap(back);
+
         playerTot+=deck.get(0).getValue();
+        playerTot+=deck.get(1).getValue();
+
         deck.remove(0);
-        cardViews[1].setImageBitmap(deck.get(0).getImage());
-        endCardViews[1].setImageBitmap(deck.get(0).getImage());
-        playerTot+=deck.get(0).getValue();
         deck.remove(0);
+
+        //Dealer********************************
+        dealTot=0;
+
+        dealerCardViews[0].setImageBitmap(back);
+        dealerCardViews[1].setImageBitmap(back);
+        dealerCardViews[2].setImageBitmap(blank);
+        dealerCardViews[3].setImageBitmap(blank);
+
+        endDealerViews[0].setImageBitmap(deck.get(0).getImage());
+        endDealerViews[1].setImageBitmap(deck.get(1).getImage());
+        endDealerViews[2].setImageBitmap(blank);
+        endDealerViews[3].setImageBitmap(blank);
+
+        dealTot+=deck.get(0).getValue();
+        dealTot+=deck.get(1).getValue();
+
+        deck.remove(0);
+        deck.remove(0);
+
+        //Reset values and bank and betting text
+
+        hitCount = 2;
+
+        setTexts();
+
 
     }
 
+    //Fill deck with cards
     public void fillDeck(){
         deck.add(new Card(twodiamonds,2, false));
         deck.add(new Card(threediamonds,3,false));
@@ -332,6 +467,21 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
+    //Betting methods
+    public void bet50(){
+        if(bank >= 50){
+            bank-=50;
+            bet+=50;
+            setTexts();
+        }else{
+            Context context = getApplicationContext();
+            CharSequence text = "Not enough funds!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+    }
     public void bet100(){
         if(bank >= 100){
             bank-=100;
@@ -360,49 +510,49 @@ public class GameActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
         }
-    }
+    }//Close betting methods
 
-    public void bet50(){
-        if(bank >= 50){
-            bank-=50;
-            bet+=50;
-            setTexts();
-        }else{
-            Context context = getApplicationContext();
-            CharSequence text = "Not enough funds!";
-            int duration = Toast.LENGTH_SHORT;
 
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-        }
-    }
-
+    //Method for resetting bank and betting texts
     public void setTexts(){
         bankText.setText("Bank Total: $" + bank);
         betText.setText("Bet Total: $" + bet);
-    }
+    }//Close
 
+    //Method for going back to main menu
     public void openMenu(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-    } //Close openCraps
+    } //Close
 
+    //Methods for hit button logic*************************************************************************************
+
+    //First hit
     public void hitOne(){
         cardViews[hitCount].setImageBitmap(deck.get(0).getImage());
         endCardViews[hitCount].setImageBitmap(deck.get(0).getImage());
         playerTot+=deck.get(0).getValue();
 
-        if(playerTot > 21){
+        //Computer will not hit if total is at or above 17
+        if(dealTot < 17){
+            dealerCardViews[hitCount].setImageBitmap(back);
+            endDealerViews[hitCount].setImageBitmap(deck.get(1).getImage());
+            dealTot+=deck.get(1).getValue();
+            deck.remove(1);
+        }
+
+        if(playerTot > 21 || dealTot == 21){
             TextView text = (TextView) dialog.findViewById(R.id.end_text);
             text.setText("You lose!");
-            if(bank == 0){
-                mainMenu.setAlpha(.5f);
-                mainMenu.setClickable(false);
+            bank-=bet;
+            if(bank <= 0){
+                continueButton.setAlpha(.5f);
+                continueButton.setClickable(false);
                 text.setText("You lost all your money!");
             }
             dialog.show();
 
-        }else if(playerTot == 21){
+        }else if(playerTot == 21 || dealTot > 21){
             TextView text = (TextView) dialog.findViewById(R.id.end_text);
             text.setText("You win!");
             bank+=(bet*2);
@@ -416,10 +566,19 @@ public class GameActivity extends AppCompatActivity {
         cardViews[hitCount].setImageBitmap(deck.get(0).getImage());
         endCardViews[hitCount].setImageBitmap(deck.get(0).getImage());
         playerTot+=deck.get(0).getValue();
-        if(playerTot > 21){
+
+        //Computer will not hit if value is at or above 17
+       if(dealTot < 17){
+            dealerCardViews[hitCount].setImageBitmap(back);
+            endDealerViews[hitCount].setImageBitmap(deck.get(0).getImage());
+            dealTot+=deck.get(0).getValue();
+            deck.remove(0);
+        }
+        if(playerTot > 21 || dealTot == 21){
             TextView text = (TextView) dialog.findViewById(R.id.end_text);
             text.setText("You lose!");
-            if(bank == 0){
+            bank-=bet;
+            if(bank <= 0){
                 continueButton.setAlpha(.5f);
                 continueButton.setClickable(false);
                 text.setText("You lost all your money!");
@@ -430,14 +589,8 @@ public class GameActivity extends AppCompatActivity {
             text.setText("You win!");
             bank+=(bet*2);
             dialog.show();
-        }else if(playerTot > 21){
-            TextView text = (TextView) dialog.findViewById(R.id.end_text);
-            text.setText("You win!");
-            bank+=(bet*2);
-            dialog.show();
         }
         deck.remove(0);
         hitCount++;
-        deck.remove(0);
-    }
+    }//End hit button logic methods
 }
