@@ -3,6 +3,7 @@ package com.example.alden.blackjackproject;
 import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import java.util.Collections;
 import android.widget.Toast;
 import android.content.Context;
 import android.widget.ToggleButton;
+import android.media.MediaPlayer;
 
 import java.util.ArrayList;
 
@@ -96,6 +98,10 @@ public class GameActivity extends AppCompatActivity {
     TextView bankText, betText;
     Button bet100,bet500,bet50,menu,buttonhit,buttonstand,mainMenu,continueButton;
     ToggleButton toggleButton;
+
+    //Initialize media players for sounds
+    final MediaPlayer betSound = MediaPlayer.create(this,R.raw.bet_sound);
+    final MediaPlayer hit_stand_sound = MediaPlayer.create(this,R.raw.shuffle);
 
     //Initialize deck of cards
     ArrayList<Card> deck;
@@ -314,6 +320,7 @@ public class GameActivity extends AppCompatActivity {
         buttonhit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                hit_stand_sound.start();
                 if(hitCount < 3){
                     hitOne();
                 }
@@ -327,6 +334,7 @@ public class GameActivity extends AppCompatActivity {
         buttonstand.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                hit_stand_sound.start();
                 int playerStand = 21-playerTot;
                 int dealerStand = 21-dealTot;
                 //Test for victory
@@ -357,6 +365,7 @@ public class GameActivity extends AppCompatActivity {
         bet50.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                betSound.start();
                 bet50();
             }
         });
@@ -364,6 +373,7 @@ public class GameActivity extends AppCompatActivity {
         bet100.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                betSound.start();
                 bet100();
             }
         });
@@ -371,6 +381,7 @@ public class GameActivity extends AppCompatActivity {
         bet500.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                betSound.start();
                 bet500();
             }
         });//Close betting buttons
