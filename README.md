@@ -13,3 +13,14 @@
   - Finishing all functionality in the main activity. Settings and about buttons.
   - Finishing settings page. Allowing to convert from UDS to Euro. Allowing some customization of the color of the card backs.
   - Finishing about page. About us, and rules of the game.
+  
+  
+  * **FINISHED 12/2/18**
+  - **Splash** A quick splash screen to give credit to Tommy and myself.
+   - **Main Activity** Main menu with buttons for a new game, settings, and an about page. Everything is functional.
+   - **Game Activity** The game view! Everything is functional. Settings page functionality merged into game activity.
+   - **About Activity** Finished.
+   - **Settings Activity** Deleted.
+  
+  
+  
