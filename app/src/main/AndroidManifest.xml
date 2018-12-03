@@ -18,22 +18,22 @@
     <meta-data
         android:name="com.google.android.gms.ads.APPLICATION_ID"
         android:value="ca-app-pub-3940256099942544~3347511713"/>
-        <activity android:name=".SplashActivity" android:theme="@style/SplashTheme" android:screenOrientation="portrait">
+        <activity android:name=".SplashActivity" android:theme="@style/SplashTheme" android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
         </activity>
-        <activity android:name=".MainActivity" android:screenOrientation="portrait">
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GameActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".AboutActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".GameActivity" />
+        <activity android:name=".AboutActivity" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

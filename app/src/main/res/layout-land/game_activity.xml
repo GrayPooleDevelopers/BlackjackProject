@@ -16,6 +16,20 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|left"
+            android:orientation="horizontal"
+            android:layout_marginBottom="120dp">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/menu_button"
+                android:contentDescription="currency menu"
+                android:onClick="showPopup" />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left"
@@ -100,14 +114,6 @@
             android:gravity="center"
             android:layout_marginBottom="10dp">
 
-            <ToggleButton
-                android:id="@+id/toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:checked="true"
-                android:textOff="EURO"
-                android:textOn="USD" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

@@ -6,10 +6,14 @@ import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import java.util.Collections;
 import android.widget.Toast;
@@ -104,15 +108,58 @@ public class GameActivity extends AppCompatActivity {
     Dialog dialog;
 
 
+    public void showPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        popup.inflate(R.menu.game_menu);
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            // This activity implements OnMenuItemClickListener
+            public boolean onMenuItemClick(MenuItem item) {
+                // Handle item selection
+                switch (item.getItemId()) {
+                    case R.id.currency_1:
+                        currency = "$";
+                        multiplier = 1;
+                        setTexts();
+                        return true;
+                        case R.id.currency_2:
+                            currency = "€";
+                            multiplier = .88;
+                            setTexts();
+                            return true;
+                            default:
+                                return true;
+                }
+            }
+        });
+        popup.show();
+    }
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
 
+        if(savedInstanceState != null){
+            bank = savedInstanceState.getInt("bank");
+            bet= savedInstanceState.getInt("bet");
+            currency=savedInstanceState.getString("currency");
+            multiplier=savedInstanceState.getDouble("multiplier");
+        }else{
+            bank = 1000;
+            bet = 0;
+            currency = "$";
+            multiplier = 1;
+        }
+
+
+
         //Set default amounts for bank and betting and currency
-        bank = 1000;
-        bet = 0;
-        currency = "$";
+
 
         //Give end game screen attributes
         dialog = new Dialog(this);
@@ -130,7 +177,6 @@ public class GameActivity extends AppCompatActivity {
         bet500 = findViewById(R.id.button_five);
         buttonhit = findViewById(R.id.button_hit);
         buttonstand = findViewById(R.id.button_stand);
-        toggleButton = findViewById(R.id.toggleButton);
 
 
 
@@ -267,33 +313,7 @@ public class GameActivity extends AppCompatActivity {
         bankText.setText("Bank Total: " + currency + bank);
         betText.setText("Bet Total: " + currency + bet);
 
-
-
-
-        //Create button listeners
-
-        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    currency="$";
-                    bankText.setText("Bank Total: " + currency + bank);
-                    betText.setText("Bet Total: " + currency + bet);
-                    bet50.setText("$50");
-                    bet100.setText("$100");
-                    bet500.setText("$500");
-                    multiplier = 1;
-                } else {
-                    currency="€";
-                    bankText.setText("Bank Total: " + currency + (bank*.88));
-                    betText.setText("Bet Total: " + currency + (bet*.88));
-                    bet50.setText("€" + Double.toString((50*.88)));
-                    bet100.setText("€" + Double.toString((100*.88)));
-                    bet500.setText("€" + Double.toString((500*.88)));
-                    multiplier = .88;
-                }
-            }
-        });
-
+        setTexts();
 
         //End screen buttons
         mainMenu.setOnClickListener(new View.OnClickListener() {
@@ -542,6 +562,9 @@ public class GameActivity extends AppCompatActivity {
     public void setTexts(){
         bankText.setText("Bank Total: " + currency + (bank*multiplier));
         betText.setText("Bet Total: " + currency + (bet*multiplier));
+        bet50.setText(currency + Double.toString((50 * multiplier)));
+        bet100.setText(currency + Double.toString((100 * multiplier)));
+        bet500.setText(currency + Double.toString((500 * multiplier)));
     }//Close
 
     //Method for going back to main menu
@@ -618,4 +641,24 @@ public class GameActivity extends AppCompatActivity {
         deck.remove(0);
         hitCount++;
     }//End hit button logic methods
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putInt("bank",bank);
+        outState.putInt("bet",bet);
+        outState.putDouble("multiplier",multiplier);
+        outState.putString("currency",currency);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+            bank= savedInstanceState.getInt("bank");
+            bet= savedInstanceState.getInt("bet");
+
+
+    }
+
+
 }
