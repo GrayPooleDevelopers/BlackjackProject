@@ -18,7 +18,8 @@ import com.google.android.gms.ads.MobileAds;
 public class MainActivity extends AppCompatActivity {
 
     AdView myAdView;
-    Button openGame, openSettings, openAbout;
+    Button openGame, openAbout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         openGame = findViewById(R.id.start_game_button);
-        openSettings = findViewById(R.id.settings_button);
         openAbout = findViewById(R.id.about_button);
 
         playSound(menuMusic);
@@ -48,13 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 shuffleSound.start();
             }
         });//Close open game button
-        openSettings.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                openSettings();
-                ;
-            }
-        });//Close open game button
+
         openAbout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -63,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });//Close open game button
 
-    }
+    }//End create
 
     public void playSound(MediaPlayer media){
         media.setLooping(true);
@@ -72,14 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void openGame(MediaPlayer media){
         Intent intent = new Intent(this, GameActivity.class);
-        startActivity(intent);
         media.stop();
-
-    } //Close openGame
-    public void openSettings(){
-        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
-    } //Close openSettings
+    } //Close openGame
     public void openAbout(){
         Intent intent = new Intent(this, AboutActivity.class);
         startActivity(intent);

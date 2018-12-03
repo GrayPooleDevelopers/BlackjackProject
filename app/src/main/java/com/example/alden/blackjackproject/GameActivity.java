@@ -8,14 +8,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.Collections;
 import android.widget.Toast;
 import android.content.Context;
+import android.widget.ToggleButton;
+
 import java.util.ArrayList;
 
 public class GameActivity extends AppCompatActivity {
+
+    boolean isEuro = false;
 
     //Create bitmaps for all cards**************************************************************************************************************************
     Bitmap back; // back card
@@ -82,11 +87,15 @@ public class GameActivity extends AppCompatActivity {
     int dealTot = 0;
     int bank;
     int bet;
+    double multiplier = 1;
+
+    String currency;
 
     //Initialize UI image views, buttons, textviews
     ImageView[] cardViews, endCardViews,dealerCardViews,endDealerViews;
     TextView bankText, betText;
     Button bet100,bet500,bet50,menu,buttonhit,buttonstand,mainMenu,continueButton;
+    ToggleButton toggleButton;
 
     //Initialize deck of cards
     ArrayList<Card> deck;
@@ -100,9 +109,10 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
 
-        //Set default amounts for bank and betting
+        //Set default amounts for bank and betting and currency
         bank = 1000;
         bet = 0;
+        currency = "$";
 
         //Give end game screen attributes
         dialog = new Dialog(this);
@@ -118,9 +128,10 @@ public class GameActivity extends AppCompatActivity {
         bet100 = findViewById(R.id.button_hundred);
         bet50 = findViewById(R.id.button_fifty);
         bet500 = findViewById(R.id.button_five);
-        menu = findViewById(R.id.menu_button);
         buttonhit = findViewById(R.id.button_hit);
         buttonstand = findViewById(R.id.button_stand);
+        toggleButton = findViewById(R.id.toggleButton);
+
 
 
 
@@ -253,13 +264,36 @@ public class GameActivity extends AppCompatActivity {
         bankText=(TextView)findViewById(R.id.bank_total);
         betText=(TextView)findViewById(R.id.bet_total);
 
-        bankText.setText("Bank Total: $" + bank);
-        betText.setText("Bet Total: $" + bet);
+        bankText.setText("Bank Total: " + currency + bank);
+        betText.setText("Bet Total: " + currency + bet);
 
 
 
 
         //Create button listeners
+
+        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    currency="$";
+                    bankText.setText("Bank Total: " + currency + bank);
+                    betText.setText("Bet Total: " + currency + bet);
+                    bet50.setText("$50");
+                    bet100.setText("$100");
+                    bet500.setText("$500");
+                    multiplier = 1;
+                } else {
+                    currency="€";
+                    bankText.setText("Bank Total: " + currency + (bank*.88));
+                    betText.setText("Bet Total: " + currency + (bet*.88));
+                    bet50.setText("€" + Double.toString((50*.88)));
+                    bet100.setText("€" + Double.toString((100*.88)));
+                    bet500.setText("€" + Double.toString((500*.88)));
+                    multiplier = .88;
+                }
+            }
+        });
+
 
         //End screen buttons
         mainMenu.setOnClickListener(new View.OnClickListener() {
@@ -306,27 +340,18 @@ public class GameActivity extends AppCompatActivity {
                         text.setText("You lost all your money!");
                     }
                     dialog.show();
-                    bankText.setText("Bank Total: $" + bank);
-                    betText.setText("Bet Total: $" + bet);
+                    bankText.setText("Bank Total: " + currency + (bank*multiplier));
+                    betText.setText("Bet Total: " + currency + (bet*multiplier));
                 }else{
                     TextView text = (TextView) dialog.findViewById(R.id.end_text);
                     text.setText("You win!");
                     bank+=(bet*2);
                     dialog.show();
-                    bankText.setText("Bank Total: $" + bank);
-                    betText.setText("Bet Total: $" + bet);
+                    bankText.setText("Bank Total: " + currency + (bank*multiplier));
+                    betText.setText("Bet Total: " + currency + (bet*multiplier));
                 }
             }
         });//Close stand button
-
-
-        //Main Menu button
-        menu.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                openMenu();
-            }
-        });//Close main menu button
 
         //Betting buttons
         bet50.setOnClickListener(new View.OnClickListener(){
@@ -515,8 +540,8 @@ public class GameActivity extends AppCompatActivity {
 
     //Method for resetting bank and betting texts
     public void setTexts(){
-        bankText.setText("Bank Total: $" + bank);
-        betText.setText("Bet Total: $" + bet);
+        bankText.setText("Bank Total: " + currency + (bank*multiplier));
+        betText.setText("Bet Total: " + currency + (bet*multiplier));
     }//Close
 
     //Method for going back to main menu
