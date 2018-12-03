@@ -19,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
 
     AdView myAdView;
     Button openGame, openSettings, openAbout;
+    Boolean bool = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         final MediaPlayer menuMusic = MediaPlayer.create(this,R.raw.menu_theme);
         menuMusic.start();
 
+
+        Intent intent = getIntent();
+        bool = getIntent().getExtras().getBoolean("euro2");
 
         openGame = findViewById(R.id.start_game_button);
         openSettings = findViewById(R.id.settings_button);
@@ -72,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openGame(MediaPlayer media){
         Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("euro3",bool);
         startActivity(intent);
         media.stop();
 

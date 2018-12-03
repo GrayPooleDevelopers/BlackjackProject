@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GameActivity extends AppCompatActivity {
+    public boolean isEuro = false;
     Bitmap back; // back card
     Bitmap twoclubs;
     Bitmap threeclubs;
@@ -120,6 +121,8 @@ public class GameActivity extends AppCompatActivity {
         endCardViews[2] = (ImageView) dialog.findViewById(R.id.endCard3);
         endCardViews[3] = (ImageView) dialog.findViewById(R.id.endCard4);
 
+        Intent intent = getIntent();
+        isEuro = getIntent().getExtras().getBoolean("euro2");
 
         back = BitmapFactory.decodeResource(getResources(), R.drawable.back);
 
@@ -256,6 +259,8 @@ public class GameActivity extends AppCompatActivity {
             }
         });//Close open game button
 
+
+
     }
 
     public void resetGame(){
@@ -377,9 +382,20 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+
+
     public void setTexts(){
-        bankText.setText("Bank Total: $" + bank);
-        betText.setText("Bet Total: $" + bet);
+
+        if (isEuro == true){
+            bankText.setText("Bank Total: €" + bank);
+            betText.setText("Bet Total: €" + bank);
+        }
+
+        else{
+            bankText.setText("Bank Total: $" + bank);
+            betText.setText("Bet Total: $" + bet);
+        }
+
     }
 
     public void openMenu(){
@@ -440,4 +456,9 @@ public class GameActivity extends AppCompatActivity {
         hitCount++;
         deck.remove(0);
     }
+
+    public void setEuro(boolean bool){
+        isEuro = bool;
+    }
+
 }
