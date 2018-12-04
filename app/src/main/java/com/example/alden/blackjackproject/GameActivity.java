@@ -353,7 +353,7 @@ public class GameActivity extends AppCompatActivity {
                 else{
                     hitTwo();
                 }
-		bet=0;
+		
             }
 	
         });//Close hit button
@@ -394,7 +394,7 @@ public class GameActivity extends AppCompatActivity {
                     dialog.show();
                     setTexts();
                 }
-		bet=0;
+		
             }
         });//Close stand button
 
@@ -429,13 +429,13 @@ public class GameActivity extends AppCompatActivity {
     public void youLose(){
         TextView text = (TextView) dialog.findViewById(R.id.end_text);
         text.setText("You lose!");
-        bank-=bet;
         if(bank <= 0){
             continueButton.setAlpha(.5f);
             continueButton.setClickable(false);
             text.setText("You lost all your money!");
         }
         dialog.show();
+	bet=0;
         setTexts();
     }
 
@@ -443,6 +443,7 @@ public class GameActivity extends AppCompatActivity {
         TextView text = (TextView) dialog.findViewById(R.id.end_text);
         text.setText("You win!");
         bank+=(bet*2);
+	bet=0;
         dialog.show();
         setTexts();
     }
