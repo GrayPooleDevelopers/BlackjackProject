@@ -1,4 +1,4 @@
-/*Created by Thomas Gray tgray39 and Alden Poole dpoole5
+﻿/*Created by Thomas Gray tgray39 and Alden Poole dpoole5
     Final Project
     IS 3920
     Blackjack Game
@@ -354,6 +354,7 @@ public class GameActivity extends AppCompatActivity {
                     hitTwo();
                 }
             }
+	bet=0;
         });//Close hit button
 
         //Stand button
@@ -392,6 +393,7 @@ public class GameActivity extends AppCompatActivity {
                     dialog.show();
                     setTexts();
                 }
+		bet=0;
             }
         });//Close stand button
 
