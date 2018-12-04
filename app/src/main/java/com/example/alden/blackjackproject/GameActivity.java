@@ -353,8 +353,9 @@ public class GameActivity extends AppCompatActivity {
                 else{
                     hitTwo();
                 }
+		bet=0;
             }
-	bet=0;
+	
         });//Close hit button
 
         //Stand button
